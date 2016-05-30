@@ -1,7 +1,7 @@
 #Docker file para la creación de la imagen base
 From debian:latest
 
-MAINTAINER Christopher Domingo Real "christopher.domingo@s2grupo.com"
+MAINTAINER Christopher Domingo Real ""
 
 RUN apt-get update
 
