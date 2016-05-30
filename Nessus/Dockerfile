@@ -1,5 +1,5 @@
 #probar desde la debian pelada
-FROM debian
+FROM yeknu/debian
 
 MAINTAINER Christopher Domingo Real < christopher.domingo@s2grupo.com >
 
