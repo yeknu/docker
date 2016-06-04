@@ -1,23 +1,15 @@
-FROM ubuntu:14.04
-MAINTAINER Rory McCune <rorym@mccune.org.uk>
-ENV DEBIAN_FRONTEND noninteractive
-ENV JAVA_HOME /usr/lib/jvm/java-8-oracle/ 
-RUN apt-get update -y && \
-	apt-get install -y software-properties-common
-RUN add-apt-repository ppa:webupd8team/java -y && \
-echo debconf shared/accepted-oracle-license-v1-1 select true |  debconf-set-selections && \
-echo debconf shared/accepted-oracle-license-v1-1 seen true |  debconf-set-selections && \
-apt-get update -y && \
-apt-get install -y --no-install-recommends oracle-java8-installer && \
-apt-get install -y --no-install-recommends oracle-java8-set-default && \
-apt-get install -y libgtk2.0-0 libxtst6 && \
-rm -rf /var/cache/oracle-jdk8-installer && \
-apt-get --purge autoremove -y software-properties-common && \
-apt-get clean && \
-rm -rf /var/lib/apt/lists/*
+FROM yeknu/debian
 
-RUN mkdir burp
-WORKDIR /burp
-RUN wget -q -O burpsuite.jar https://portswigger.net/DownloadUpdate.ashx?Product=Free
+MAINTAINER Christopher Domingo Real < >
 
-ENTRYPOINT ["java", "-jar", "/burp/burpsuite.jar"]
+RUN apt-get update
+
+RUN apt-get upgrade
+
+RUN apt-get install javacc -y
+
+RUN mkdir /Burp
+
+COPY ./burpsuite.jar /Burp
+
+ENTRYPOINT ["java","-jar","/Burp/burpsuite.jar"]
