@@ -18,7 +18,7 @@
 #
 
 FROM yeknu/debian
-MAINTAINER Phocean <jc@phocean.net>
+MAINTAINER yeknu 
 
 WORKDIR /opt
 USER root
@@ -37,18 +37,22 @@ RUN apt-get update && apt-get -y install \
   && rm -rf /var/lib/apt/lists/*
 
 # startup script and tmux configuration file
-RUN curl -sSL https://github.com/REMnux/docker/raw/master/metasploit/scripts/init.sh --output /usr/local/bin/init.sh && \
-  chmod a+xr /usr/local/bin/init.sh && \
-  curl -sSL https://github.com/REMnux/docker/raw/master/metasploit/conf/tmux.conf --output /root/.tmux.conf
+COPY ./scripts/init.sh /usr/local/bin/init.sh
+##RUN curl -sSL https://github.com/yeknu/docker/raw/master/Metasploit/scripts/init.sh --output /usr/local/bin/init.sh && \
+RUN  chmod a+xr /usr/local/bin/init.sh  
+COPY ./conf/tmux.conf /root/.tmux.conf 
+## curl -sSL https://github.com/REMnux/docker/raw/master/metasploit/conf/tmux.conf --output /root/.tmux.conf
 
 # Get Metasploit
 RUN git clone https://github.com/rapid7/metasploit-framework.git msf
 WORKDIR msf
 
 # Install PosgreSQL
-RUN curl -sSL https://github.com/REMnux/docker/raw/master/metasploit/scripts/db.sql --output /tmp/db.sql
+COPY ./scripts/db.sql /tmp/db.sql
+##RUN curl -sSL https://github.com/REMnux/docker/raw/master/metasploit/scripts/db.sql --output /tmp/db.sql
 RUN /etc/init.d/postgresql start && su postgres -c "psql -f /tmp/db.sql"
-RUN curl -sSL https://github.com/REMnux/docker/raw/master/metasploit/conf/database.yml --output /opt/msf/config/database.yml
+COPY ./conf/database.yml /opt/msf/config/database.yml
+##RUN curl -sSL https://github.com/REMnux/docker/raw/master/metasploit/conf/database.yml --output /opt/msf/config/database.yml
 
 # RVM
 RUN curl -sSL https://rvm.io/mpapis.asc | gpg --import
