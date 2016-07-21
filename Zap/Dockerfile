@@ -10,6 +10,6 @@ RUN apt-get install javacc -y
 
 RUN mkdir /zap
 
-COPY ./burpsuite.jar /zap
+COPY ./ZAP_2.5.0 /zap
 
 ENTRYPOINT ["java","-jar","/zap/zap-2.5.0.jar"]
