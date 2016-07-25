@@ -12,4 +12,6 @@ RUN mkdir /zap
 
 COPY ./ZAP_2.5.0 /zap
 
+RUN chmod -R 777 /zap
+
 ENTRYPOINT ["java","-jar","/zap/zap-2.5.0.jar"]
