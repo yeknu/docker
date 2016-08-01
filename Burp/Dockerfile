@@ -1,4 +1,4 @@
-FROM yeknu/ubuntu
+FROM yeknu/debian
 
 MAINTAINER Christopher Domingo Real < >
 
